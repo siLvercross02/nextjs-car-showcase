@@ -13,8 +13,9 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const { city_mpg, year, make, model, transmission, drive } = car;
+    const finalMPG = typeof city_mpg === "string" ? 0 : city_mpg
 
-    const carRent = calculateCarRent(city_mpg, year);
+    const carRent = calculateCarRent(finalMPG, year);
 
     return (
         <div className="car-card group">
@@ -53,7 +54,7 @@ const CarCard = ({ car }: CarCardProps) => {
                     <div className="flex flex-col justify-center items-center gap-2">
                         <Image src="/gas.svg" width={20} height={20} alt="gas" />
                         <p className="text-[14px]">
-                            {city_mpg} MPG
+                            {finalMPG} MPG
                         </p>
                     </div>
                 </div>
