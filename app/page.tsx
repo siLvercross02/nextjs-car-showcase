@@ -15,8 +15,6 @@ export default async function Home({ searchParams }: any) {
 
   const isDateEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
-  console.log(allCars)
-
   return (
     <main className="overflow-hidden">
       <Hero />
@@ -38,8 +36,8 @@ export default async function Home({ searchParams }: any) {
         {!isDateEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard car={car} />
+              {allCars?.map((car, index) => (
+                <CarCard car={car} key={index} />
               ))}
             </div>
 

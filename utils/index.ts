@@ -1,29 +1,52 @@
 import { CarProps, FilterProps } from "@/types";
 
-const axios = require("axios");
+// const axios = require("axios");
+
+// export async function fetchCars(filters: FilterProps) {
+//   const { manufacturer, fuel, model, year, limit } = filters;
+
+//   const options = {
+//     method: "GET",
+//     url: "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars",
+//     params: {
+//       model: model,
+//       make: manufacturer,
+//       year: year,
+//       fuel_type: fuel,
+//       limit: limit,
+//     },
+//     headers: {
+//       "X-RapidAPI-Key": "d18688c546mshfe837d73a180421p1f3273jsnd6ebfb1eb0bd",
+//       "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+//     },
+//   };
+
+//   const response = await axios.request(options);
+
+//   const result = await response.data;
+
+//   return result;
+// }
 
 export async function fetchCars(filters: FilterProps) {
-  const { manufacturer, fuel, model, year, limit } = filters;
+  const { manufacturer, year, model, fuel } = filters;
 
-  const options = {
-    method: "GET",
-    url: "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars",
-    params: {
-      model: model,
-      make: manufacturer,
-      year: year,
-      fuel_type: fuel,
-      limit: limit,
-    },
-    headers: {
-      "X-RapidAPI-Key": "d18688c546mshfe837d73a180421p1f3273jsnd6ebfb1eb0bd",
-      "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-    },
+  // Set the required headers for the API request
+  const headers: HeadersInit = {
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API || "",
+    "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
   };
 
-  const response = await axios.request(options);
+  // Set the required headers for the API request
+  const response = await fetch(
+    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&fuel_type=${fuel}`,
+    {
+      headers: headers,
+    }
+  );
 
-  const result = await response.data;
+  // Parse the response as JSON
+  const result = await response.json();
 
   return result;
 }
